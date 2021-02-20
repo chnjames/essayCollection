@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body,
+    html {
+      padding: 0;
+      margin: 0;
+      background-color: #add8e5;
+    }
+    /* 雪花的默认样式 */
+    /* .snow {
+      display: block;
+      width: 100px;
+      height: 100px;
+      background-image: radial-gradient(#fff 0%, rgba(255, 255, 255, 0) 60%);
+      border-radius: 50%;
+    } */
+  </style>
+</head>
+
+<body style="perspective: 500;-webkit-perspective: 500">
+  <span class="snow"></span>
+  <script>
+    // 雪花类
+    class Snow {
+      constructor(opt = {}) {
+        this.el = null // 元素
+        this.width = 0 // 直径
+        this.maxWidth = opt.maxWidth || 80 // 最大直径
+        this.minWidth = opt.minWidth || 2 // 最小直径
+        this.opacity = 0 // 透明度
+        this.x = 0 // 水平位置
+        this.y = 0 // 垂直位置
+        this.z = 0 // z轴数值
+        // this.speed = 0 // 速度
+        this.sx = 0 // 水平速度
+        this.sy = 0 // 垂直速度
+        this.maxSpeed = opt.maxSpeed || 4 // 最大速度
+        this.minSpeed = opt.minSpeed || 1 // 最小速度
+        // 浏览器窗口尺寸
+        this.windowWidth = window.innerWidth
+        this.windowHeight = window.innerHeight
+        this.quickMaxSpeed = opt.quickMaxSpeed || 10 // 快速划过的最大速度
+        this.quickMinSpeed = opt.quickMinSpeed || 8 // 快速划过的最小速度
+        this.quickWidth = opt.quickWidth || 80 // 快速划过的宽度
+        this.quickOpacity = opt.quickOpacity || 0.2 // 快速划过的透明度
+        // 左右摇摆方法一：
+        this.isSwing = false // 是否左右摇摆
+        this.stepSx = 0.03 // 左右摇摆的步长
+        // 左右摇摆方法二：
+        // this.isSwing = false // 是否左右摇摆
+        // this.swingRadian = 0 // 左右摇摆的正弦函数x变量
+        // this.swingStep = 0.01 // 左右摇摆的正弦x步长
+        // 左右摇摆方法二摆动幅度太大的解决方法：
+        // this.isSwing = false // 是否左右摇摆
+        // this.swingRadian = 1 // 左右摇摆的正弦函数x变量  需要改成一个中间值
+        // this.swingStep = 0.01 // 左右摇摆的正弦x步长
+
+        this.init()
+      }
+      // 雪花运动方法
+      move() {
+        // 左右摇摆方法一：
+        if (this.isSwing) {
+          if (this.sx >= 1 || this.sx <= -1) {
+            this.stepSx = -this.stepSx
+          }
+          this.sx += this.stepSx
+        }
+        // 左右摇摆方法二：
+        // if (this.isSwing) {
+        //   this.swingRadian += this.swingStep
+        //   this.x += this.sx * Math.sin(this.swingRadian * Math.PI) * 0.2
+        // } else {
+        //   this.x += this.sx
+        // }
+        // 左右摇摆方法二摆动幅度太大的解决方法：
+        // if (this.isSwing) {
+        //   if (this.swingRadian > 1.1 || this.swingRadian < 0.9) {
+        //     this.swingStep = -this.swingStep
+        //   }
+        //   this.swingRadian += this.swingStep
+        //   this.x += this.sx * Math.sin(this.swingRadian * Math.PI)
+        // } else {
+        //   this.x += this.sx
+        // }
+        // 左右摇摆方法二下落速度太快的解决方法：
+        // if (this.isSwing) {
+        //   if (this.swingRadian > 1.1 || this.swingRadian < 0.9) {
+        //     this.swingStep = -this.swingStep
+        //   }
+        //   this.swingRadian += this.swingStep
+        //   this.x += this.sx * Math.sin(this.swingRadian * Math.PI)
+        //   this.y -= this.sy * Math.cos(this.swingRadian * Math.PI)// 因为速度都是负的，所以改成-
+        // } else {
+        //   this.x += this.sx
+        //   this.y += this.sy
+        // }
+        this.el.style.transform = `translate3d(${this.x}px, ${this.y}px, ${this.z}px)`
+        // this.x += this.speed
+        // this.y += this.speed
+        this.x += this.sx
+        this.y += this.sy
+        // 完全离开窗口就调一下初始化方法，另外还需要修改一下init方法，因为重新出现我们是希望它的y坐标为0或者小于0，
+        // 这样就不会又凭空出现的感觉，而是从天上下来的
+        if (this.x < -this.width || this.x > this.windowWidth || this.y > this.windowHeight) {
+          this.init(true)
+          this.setStyle()
+        }
+        this.el.style.left = this.x + 'px'
+        this.el.style.top = this.y + 'px'
+      }
+      // 初始化各种属性
+      init(reset) {
+        // 左右摇摆方法一：
+        this.isSwing = Math.random() > 0.8
+        // 左右摇摆方法二：
+        // this.swingStep = 0.01 * Math.random()
+        // 左右摇摆方法二摆动幅度太大的解决方法：
+        // this.swingStep = 0.01 * Math.random()
+        // this.swingRadian = Math.random() * (1.1 - 0.9) + 0.9// 也让它随机一下
+
+        let isQuick = Math.random() > 0.8
+        this.width = isQuick ? this.quickWidth : Math.floor(Math.random() * this.maxWidth + this.minWidth)
+        this.z = isQuick ? Math.random() * 300 + 200 : 0
+        this.opacity = isQuick ? this.quickOpacity : Math.random()
+        this.sy = isQuick ? Math.random() * this.quickMaxSpeed + this.quickMinSpeed : Math.random() * this.maxSpeed + this.minSpeed
+        // this.width = Math.floor(Math.random() * this.maxWidth + this.minWidth)
+        // this.y = reset ? -this.width : Math.floor(Math.random() * this.windowHeight)
+        // this.width = Math.floor(Math.random() * this.maxWidth + this.minWidth)
+        // this.opacity = Math.random()
+        // this.x = Math.floor(Math.random() * (this.windowWidth - this.width))
+        // this.y = Math.floor(Math.random() * (this.windowHeight - this.width))
+        // this.speed = Math.random() * this.maxSpeed + this.minSpeed
+        // this.sy = Math.random() * this.maxSpeed + this.minSpeed
+        this.sx = this.sy * Math.random()
+        this.x = Math.floor(Math.random() * (this.windowWidth - this.width))
+        this.y = Math.floor(Math.random() * (this.windowHeight - this.width))
+        if (reset && Math.random() > 0.8) {// 让一小部分的雪初始化在左侧
+          this.x = -this.width
+        } else if (reset) {
+          this.y = -this.width
+        }
+      }
+      // 设置样式
+      setStyle() {
+        this.el.style.cssText = `
+          position: fixed;
+          left: 0;
+          top: 0;
+          display: block;
+          width: ${this.width}px;
+          height: ${this.width}px;
+          opacity: ${this.opacity};
+          background-image: radial-gradient(#fff 0%, rgba(255, 255, 255, 0) 60%);
+          border-radius: 50%;
+          z-index: 9999999999999;
+          pointer-events: none;
+          transform: translate(${this.x}px, ${this.y}px);
+        `
+        // z-index: 9999999999999; 让雪花在页面的最上层
+        // pointer-events: none; 禁止响应鼠标事件
+      }
+      // 渲染
+      render() {
+        this.el = document.createElement('div')
+        this.setStyle()
+        document.body.appendChild(this.el)
+      }
+    }
+    // 执行
+    let snowList = []
+    for (let i = 0; i < 100; i++) {
+      let snow = new Snow()
+      snow.render()
+      snowList.push(snow)
+    }
+    // 调用
+    moveSnow()
+    // 方法
+    function moveSnow() {
+      // requestAnimationFrame 不断刷新
+      window.requestAnimationFrame(() => {
+        snowList.forEach((item) => {
+          item.move()
+        })
+        moveSnow()
+      })
+    }
+  </script>
+</body>
+
+</html>
