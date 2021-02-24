@@ -43,3 +43,27 @@ PicGo 本体支持如下图床：
 
 ![Typora配置](https://raw.githubusercontent.com/chnjames/cloudImg/main/image-20210224105132603.png)
 
+### 错误排查：
+
+##### 错误一：Failed to fetch
+
+![错误一](https://raw.githubusercontent.com/chnjames/cloudImg/main/aHR0cHM6Ly9naXRlZS5jb20vbGVvbkc3L2Jsb2dJbWFnZS9yYXcvbWFzdGVyL2ltZy8yMDIwMDMxODE0NDc0NC5wbmc)
+
+**端口设置错误**造成
+
+`解决方法`：打开picgo设置，点击设置Server选项，**将端口改为36677端口**，这是picgo推荐的默认端口号，然后保存，成功
+
+##### 错误二：Failed to fetch：端口冲突，**picgo自动帮你把36677端口改为366771端口**，导致错误
+
+`解决方法`：**先把picgo中的端口设置改回36677，然后退出所有picgo程序**，再使用typora上传功能（会自动启动picgo程序）
+
+##### 错误三：{“success”,false}
+
+![错误三](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9naXRlZS5jb20vbGVvbkc3L2Jsb2dJbWFnZS9yYXcvbWFzdGVyL2ltZy8yMDIwMDMxODE0MjYyMy5wbmc?x-oss-process=image/format,png)
+
+原因：**文件名冲突**
+
+`解决办法`：打开picgo设置，将**【时间戳重命名】打开**
+
+
+
