@@ -44,6 +44,23 @@ PicGo 本体支持如下图床：
 ![Typora配置](https://raw.githubusercontent.com/chnjames/cloudImg/main/image-20210224105132603.png)
 
 ### 错误排查：
+##### 错误零：PicGo相册看不到照片
+
+![](https://camo.githubusercontent.com/7bcd026f3abc4140fe48d86a10c2545cd41c5e12535bbaaea21d6f6a93e309a9/68747470733a2f2f696d672e76696d2d636e2e636f6d2f39312f64613064653430343062393265383437313835376131353637326237353337303066353732612e706e67)
+
+![](https://camo.githubusercontent.com/f659786fc4f0d750782bcb6f9b97cf13771924d3c4b1efbf41c3399a497f3866/68747470733a2f2f696d672e76696d2d636e2e636f6d2f30642f63306234396638363730613839633366343564306430666564363537393237653733663961392e706e67)
+
+`解决办法`：修改hosts     C:\Windows\System32\drivers\etc\hosts
+
+在文件末尾添加：
+
+`151.101.184.133    raw.githubusercontent.com`
+
+这个地址也会有所变动，需要自己查找最新的IP地址，
+
+查询网站：https://tool.chinaz.com/nslookup
+
+![站长工具](https://raw.githubusercontent.com/chnjames/cloudImg/main/20210224111200.png)
 
 ##### 错误一：Failed to fetch
 
