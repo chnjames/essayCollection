@@ -47,7 +47,7 @@ PicGo 本体支持如下图床：
 
 ##### 错误一：Failed to fetch
 
-![错误一](https://raw.githubusercontent.com/chnjames/cloudImg/main/aHR0cHM6Ly9naXRlZS5jb20vbGVvbkc3L2Jsb2dJbWFnZS9yYXcvbWFzdGVyL2ltZy8yMDIwMDMxODE0NDc0NC5wbmc)
+![错误一](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9naXRlZS5jb20vbGVvbkc3L2Jsb2dJbWFnZS9yYXcvbWFzdGVyL2ltZy8yMDIwMDMxODE0NDc0NC5wbmc?x-oss-process=image/format,png)
 
 **端口设置错误**造成
 
