@@ -64,7 +64,6 @@
 
 - Let 和 Const
 
-##### ES7：
 
 - includes()
 
@@ -91,7 +90,6 @@
     console.log(2**10); // 1024
     ```
 
-##### ES8：
 
 - async/await
 
@@ -131,7 +129,6 @@
   - 用来获取一个对象的所有自身属性的描述符，若没有任何自身属性，则返回空对象。
   - `Object.getOwnPropertySescriptors(obj)`
 
-##### ES10:
 
 - Array方法：`flat()`和`flatMap()`
 
