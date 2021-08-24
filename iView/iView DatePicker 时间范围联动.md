@@ -1,3 +1,4 @@
+```vue
 <template>
   <div class="header-item">
     <div class="header-item-title">日期1</div>
@@ -68,3 +69,4 @@ export default {
     }
   }
 </style>
+```
