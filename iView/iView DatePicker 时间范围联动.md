@@ -1,3 +1,5 @@
+#### 预览图
+iView DatePicker 时间范围联动![iView日期范围联动](https://raw.githubusercontent.com/chnjames/cloudImg/main/20210824114357.gif)
 ```vue
 <template>
   <div class="header-item">
@@ -43,7 +45,19 @@ export default {
       let d = date.getDate();
       d = d < 10 ? "0" + d : d;
       return y + "-" + m + "-" + d;
-    }
+    },
+    getNextDate(date, days) { // 获取指定日期的前几天
+      const nowDate = new Date(date)
+      nowDate.setDate(nowDate.getDate() - days)
+      const dateStr = {
+        year: nowDate.getFullYear(),
+        month: nowDate.getMonth() + 1,
+        day: nowDate.getDate()
+      }
+      const newMonth = dateStr.month.toString().padStart(2,'0')
+      const newDay = dateStr.day.toString().padStart(2,'0')
+      return `${dateStr.year}-${newMonth}-${newDay}`
+  	}
   }
 }
 </script>
